@@ -64,17 +64,18 @@ export const carApi = {
     const response = await api.delete(`/api/cars/${id}`);
     return response.data;
   },
+uploadImage: async (file: File) => {
+  const formData = new FormData();
+  formData.append('image', file); // IMPORTANT: name must be 'image'
 
-  uploadImage: async (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    const response = await api.post('/api/upload/image', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
-  },
+  const response = await api.post('/api/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return response.data;
+},
 
   uploadMultipleImages: async (files: File[]) => {
     const formData = new FormData();
